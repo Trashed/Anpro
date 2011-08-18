@@ -391,7 +391,8 @@ class GameThread extends Thread
         if (_currentTime - lastGameModeUpdate >= 1000) {
         	lastGameModeUpdate = _currentTime;
         	
-            if (GameMode.enemiesLeft == 0) {
+
+        	if (GameMode.enemiesLeft == 0) {
                 gameMode.startWave();
             }
             

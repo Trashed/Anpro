@@ -54,7 +54,7 @@ public class GLRenderer implements Renderer
     /* Animaatioiden ja tekstuurien m‰‰r‰t */
     public static final int AMOUNT_OF_PLAYER_TEXTURES        = 5;
     public static final int AMOUNT_OF_ALLY_TEXTURES          = 1;
-    public static final int AMOUNT_OF_ENEMY_TEXTURES         = 4;
+    public static final int AMOUNT_OF_ENEMY_TEXTURES         = 5;
     public static final int AMOUNT_OF_PROJECTILE_TEXTURES    = 4;
     public static final int AMOUNT_OF_HUD_TEXTURES           = 57;
     public static final int AMOUNT_OF_OBSTACLE_TEXTURES      = 3;
@@ -63,7 +63,7 @@ public class GLRenderer implements Renderer
     
     public static final int AMOUNT_OF_PLAYER_ANIMATIONS      = 6;
     public static final int AMOUNT_OF_ALLY_ANIMATIONS        = 4;
-    public static final int AMOUNT_OF_ENEMY_ANIMATIONS       = 5;
+    public static final int AMOUNT_OF_ENEMY_ANIMATIONS       = 6;
     public static final int AMOUNT_OF_PROJECTILE_ANIMATIONS  = 5;
     public static final int AMOUNT_OF_HUD_ANIMATIONS         = 8;
     public static final int AMOUNT_OF_EFFECT_ANIMATIONS      = 12;
@@ -134,8 +134,8 @@ public class GLRenderer implements Renderer
         playerAnimations      = new GLSpriteSet[AMOUNT_OF_PLAYER_ANIMATIONS];
         allyTextures          = new GLSpriteSet[2][AMOUNT_OF_ALLY_TEXTURES];
         allyAnimations        = new GLSpriteSet[2][AMOUNT_OF_ALLY_ANIMATIONS];
-        enemyTextures         = new GLSpriteSet[5][AMOUNT_OF_ENEMY_TEXTURES];
-        enemyAnimations       = new GLSpriteSet[5][AMOUNT_OF_ENEMY_ANIMATIONS];
+        enemyTextures         = new GLSpriteSet[6][AMOUNT_OF_ENEMY_TEXTURES];
+        enemyAnimations       = new GLSpriteSet[6][AMOUNT_OF_ENEMY_ANIMATIONS];
         projectileTextures    = new GLSpriteSet[6][AMOUNT_OF_PROJECTILE_TEXTURES];
         projectileAnimations  = new GLSpriteSet[6][AMOUNT_OF_PROJECTILE_ANIMATIONS];
         mothershipTextures    = new GLSpriteSet[AMOUNT_OF_MOTHERSHIP_TEXTURES];
@@ -340,11 +340,16 @@ public class GLRenderer implements Renderer
         enemyAnimations[3][3] = new GLSpriteSet(_gl, context, R.drawable.enemy4_tex_0, 1, false); // TODO korvaa r‰j‰hdyksell‰
         enemyAnimations[3][4] = new GLSpriteSet(_gl, context, R.drawable.enemy1_disabled_anim, 5, false);
 
-        // Vihollinen #4
+        // Vihollinen #5
         enemyTextures[4][0]   = new GLSpriteSet(_gl, context, R.drawable.enemy5_tex_0, 1, false);
         enemyAnimations[4][3] = new GLSpriteSet(_gl, context, R.drawable.enemy5_tex_0, 1, false); // TODO korvaa r‰j‰hdyksell‰
         enemyAnimations[4][4] = new GLSpriteSet(_gl, context, R.drawable.enemy1_disabled_anim, 5, false);
-
+        
+         // Vihollinen #6
+        enemyTextures[5][0]	  = new GLSpriteSet(_gl, context, R.drawable.enemy6_tex_0, 1, false);
+        enemyAnimations[5][3] = new GLSpriteSet(_gl, context, R.drawable.enemy6_tex_0, 1, false); // TODO: korvaa r‰j‰hdyksell‰
+        enemyAnimations[5][4] = new GLSpriteSet(_gl, context, R.drawable.enemy1_disabled_anim, 1, false);
+        
         /* Ladataan ammusten grafiikat */
         // Vakioase
         projectileTextures[0][0]   = new GLSpriteSet(_gl, context, R.drawable.projectilelaser_tex_0, 1, false);

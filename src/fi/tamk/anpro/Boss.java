@@ -8,7 +8,7 @@ public class Boss extends GameObject
 	
 	public Boss(int _speed)
 	{
-		super(0);
+		super(_speed);
 
         /* Haetaan tarvittavat luokat käyttöön */
 		wrapper = Wrapper.getInstance();
@@ -26,6 +26,7 @@ public class Boss extends GameObject
         }
 
         /* Määritetään objektin tila (piirtolista ja tekoäly) */
+        state = Wrapper.INACTIVE;
 		wrapper.addToDrawables(this);
 	}
 
@@ -50,4 +51,9 @@ public class Boss extends GameObject
 		// ...
 	}
 
+	@Override
+	public void setActive()
+	{
+		//state = Wrapper.FULL_ACTIVITY;
+	}
 }

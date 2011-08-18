@@ -16,6 +16,7 @@ abstract public class AbstractAi
     public static final int ROTARY_ENEMY_AI          = 2;
     public static final int SQUIGGLY_ENEMY_AI        = 3;
     public static final int APPROACHANDSTOP_ENEMY_AI = 4;
+    public static final int SEEKANDDESTROY_ENEMY_AI  = 5;
     
     /* Liittolaisten tekoälyt */
     public static final int TURRET_AI = 1;

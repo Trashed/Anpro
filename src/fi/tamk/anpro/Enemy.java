@@ -56,6 +56,9 @@ public class Enemy extends AiObject
         else if (rank == 5) {
         	collisionRadius = (int) (50 * Options.scale);
         }
+        else if (rank == 6) {
+        	collisionRadius = (int) (50 * Options.scale);
+        }
     
         // Haetaan animaatioiden pituudet
         animationLength = new int[GLRenderer.AMOUNT_OF_ENEMY_ANIMATIONS];
@@ -84,6 +87,9 @@ public class Enemy extends AiObject
         }
         else if (_ai == AbstractAi.APPROACHANDSTOP_ENEMY_AI) {
             ai = new ApproachAndStopAi(this, Wrapper.CLASS_TYPE_ENEMY, _weaponManager);
+        }
+        else if (_ai == AbstractAi.SEEKANDDESTROY_ENEMY_AI) {
+        	ai = new SeekAndDestroyAi(this, Wrapper.CLASS_TYPE_ENEMY, _weaponManager);
         }
     }
     
@@ -227,8 +233,11 @@ public class Enemy extends AiObject
         else if (_ai == AbstractAi.APPROACHANDSTOP_ENEMY_AI) {
             ai = new ApproachAndStopAi(this, Wrapper.CLASS_TYPE_ENEMY, weaponManager);
         }
+        else if(_ai == AbstractAi.SEEKANDDESTROY_ENEMY_AI) {
+        	ai = new SeekAndDestroyAi(this, Wrapper.CLASS_TYPE_ENEMY, weaponManager);
+        }
     }
-
+    
     /**
      * K‰sittelee jonkin toiminnon p‰‰ttymisen. Kutsutaan animaation loputtua, mik‰li
      * <i>actionActivated</i> on TRUE.<br /><br />

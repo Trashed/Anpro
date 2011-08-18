@@ -17,11 +17,12 @@ public class GameMode
     public static final int AMOUNT_OF_ENEMIES_PER_WAVE = 11;
 
     /* Pelaaja, emoalus ja liittolaiset */
-    private Player     player;
-    private Boss mothership;
-    private Ally	   turret1;
-    private Ally	   turret2;
-    private Ally	   turret3;
+    private Player     		   player;
+    private Boss       		   mothership;
+    public static Enemy	   	   boss;
+    private Ally	   		   turret1;
+    private Ally	   		   turret2;
+    private Ally	   		   turret3;
 
     /* Asteroidit */
     private Obstacle[] asteroids; // Asteroidit
@@ -68,6 +69,7 @@ public class GameMode
     
     /* Pisteet ja combot */
     private static long score;
+    private static long		lastScore		= 0;
     private static int  comboMultiplier = 2; // Combokerroin pisteiden laskemista varten
     private static long lastTime        = 0; // Edellisen pisteen lisäyksen aika
     private static long newTime;             // Uuden pisteen lisäyksen aika
@@ -146,6 +148,7 @@ public class GameMode
 		mothership.direction = 160;
 		mothership.x         = 100 * Options.scaleX;
 		mothership.y         = 90 * Options.scaleY;
+		mothership.state	 = Wrapper.FULL_ACTIVITY;
 		
 		// Luodaan emoaluksen tykit
     	turret1    = new Ally(1000, 0, 0, 0, AbstractAi.TURRET_AI, Ally.ALLY_TURRET, _weaponManager);
@@ -159,6 +162,14 @@ public class GameMode
     	turret3    = new Ally(1000, 0, 0, 0, AbstractAi.TURRET_AI, Ally.ALLY_TURRET, _weaponManager);
     	turret3.x  = 332 * Options.scaleX; turret3.y  = 84 * Options.scaleY;
     	turret3.state = Wrapper.FULL_ACTIVITY;
+    	
+    	// Luodaan pomovihollinen
+		boss = new Enemy(100, 0, 3, 10, AbstractAi.SEEKANDDESTROY_ENEMY_AI, 6, _weaponManager);
+		boss.direction = 0;
+    	boss.x         = 300 * Options.scaleX;
+    	boss.y         = -300 * Options.scaleY;
+    	boss.state 	   = Wrapper.INACTIVE;
+    	
         
         // Luetaan pelitilan tiedot
         reader.readGameMode(this, _weaponManager);
@@ -184,7 +195,8 @@ public class GameMode
      */
     public static void updateScore(int _rank, float _x, float _y)
     {
-        // Päivitetään lastTime nykyisellä ajalla millisekunteina
+    	long a;
+    	// Päivitetään lastTime nykyisellä ajalla millisekunteina
         if (lastTime == 0) {
             lastTime = android.os.SystemClock.uptimeMillis();
             score += (10 * _rank + 5 * _rank * totalWaves);
@@ -203,8 +215,21 @@ public class GameMode
             else {
                 score += (10 * _rank + 5 * _rank * totalWaves);
                 comboMultiplier = 1;
-                lastTime = android.os.SystemClock.uptimeMillis();
             }
+            
+            /*
+             * Verrataan (aikaa sekä) pelaajan nykyisiä ja edellisiä pisteitä,
+             * ja käynnistetään pomovihollinen niiden mukaisesti. 
+             */
+            a = score - lastScore;
+            Log.e("A", String.valueOf(a));
+            if(score - lastScore >= 100) {
+            	lastScore = score;
+            	boss.setActive();
+            }
+            
+            
+            lastTime = android.os.SystemClock.uptimeMillis();
         }
         
         hud.updateScoreCounter(score);
@@ -227,7 +252,7 @@ public class GameMode
 	            
 	            for (int index = enemies.size()-1; index >= 0; --index) {
 	                // Lasketaan uusi rank, käytetään väliaikaismuuttujana rankTemppiä
-	            	if (enemies.get(index).rank <= 4) {
+	            	if (enemies.get(index).rank <= 5) {
 		                rankTemp = enemies.get(index).rank;
 	                    enemies.get(index).setStats(enemyStats[rankTemp][0], enemyStats[rankTemp][1], enemyStats[rankTemp][2],
 	                                                enemyStats[rankTemp][3], enemyStats[rankTemp][4], rankTemp + 1);
